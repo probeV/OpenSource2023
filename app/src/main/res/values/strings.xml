@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Opensource2023</string>
+    <string name="arrow_left">previous month</string>
+    <string name="arrow_right">next month</string>
+    <string name="add_button">add</string>
+    <string name="month">MONTH</string>
+    <string name="year">YEAR</string>
 </resources>
