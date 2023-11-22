@@ -22,8 +22,6 @@ public class DiaryWriteActivity extends AppCompatActivity {
 
     EditText diaryWrite;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +36,6 @@ public class DiaryWriteActivity extends AppCompatActivity {
             public void onClick(View view) {
                 switch (view.getId())
                 {
-                    case R.id.
                 }
             }
         };
@@ -46,24 +43,6 @@ public class DiaryWriteActivity extends AppCompatActivity {
         diaryCheckButton.setOnClickListener(listener);
         diaryClearButton.setOnClickListener(listener);
         diaryWrite.setOnClickListener(listener);
-    }
-
-    
-    private void saveDiary(String readDay) {
-        FileOutputStream fos = null;
-        try {
-            fos = openFileOutput(readDay, MODE_NO_LOCALIZED_COLLATORS); //MODE_WORLD_WRITEABLE
-            String content = edtDiary.getText().toString();
-
-            // String.getBytes() = 스트링을 배열형으로 변환?
-            fos.write(content.getBytes());
-            //fos.flush();      fos.close();
-            // getApplicationContext() = 현재 클래스.this ?
-            Toast.makeText(getApplicationContext(), "일기 저장됨", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) { // Exception - 에러 종류 제일 상위 // FileNotFoundException , IOException
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "오류오류", Toast.LENGTH_SHORT).show();
-        }
     }
 
 }

@@ -9,18 +9,18 @@
     <EditText
         android:id="@+id/DiaryWrite"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="150dp"
-        android:ems="10"
-        android:hint="일기를 입력하세요"
+        android:layout_height="350dp"
+        android:background="@drawable/edge"
+        android:ems="18"
         android:inputType="textPersonName"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Year"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/month"
+        android:id="@+id/Month"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/month"
@@ -32,14 +32,39 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/year"
+        android:id="@+id/Year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/year"
         android:textSize="25sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/month"
+        app:layout_constraintTop_toBottomOf="@+id/Month"
+        tools:ignore="MissingConstraints" />
+
+
+    <TextView
+        android:id="@+id/Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="22"
+        android:textSize="35sp"
+        app:layout_constraintStart_toStartOf="@+id/DiaryWrite"
+        app:layout_constraintTop_toTopOf="@+id/DiaryWrite"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/Day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="WED"
+        android:textSize="20sp"
+
+        app:layout_constraintBottom_toBottomOf="@+id/Date"
+        app:layout_constraintStart_toEndOf="@+id/Date"
         tools:ignore="MissingConstraints" />
 
     <ImageButton
