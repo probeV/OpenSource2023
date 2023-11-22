@@ -3,7 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="fall">#F3EEEA</color>
-    <color name="fall_1">E4D0D0</color>
-    <color name="fall_2">D5B4B4</color>
+    <color name="fall_1">#E4D0D0</color>
+    <color name="fall_2">#D5B4B4</color>
     <color name="fall_3">#B18888</color>
 </resources>

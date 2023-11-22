@@ -31,18 +31,7 @@ public class DiaryWriteActivity extends AppCompatActivity {
         diaryClearButton.findViewById(R.id.DiaryClearButton);
         diaryWrite.findViewById(R.id.DiaryWrite);
 
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (view.getId())
-                {
-                }
-            }
-        };
 
-        diaryCheckButton.setOnClickListener(listener);
-        diaryClearButton.setOnClickListener(listener);
-        diaryWrite.setOnClickListener(listener);
     }
 
 }
