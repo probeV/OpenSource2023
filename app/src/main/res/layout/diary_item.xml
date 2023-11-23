@@ -6,15 +6,16 @@
 
 
     <TextView
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="11/20"
-        android:textSize="18dp"
+        android:textSize="15sp"
         android:textStyle="bold"
-        android:layout_marginBottom="25dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="15dp"/>
+        android:layout_marginBottom="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"/>
 
 
 

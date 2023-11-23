@@ -1,9 +1,19 @@
 package com.example.opensource2023;
 
 public class DiaryBox {
-    String date;
+    private String month;
+    private String day;
 
-    public DiaryBox(String date) {
-        this.date = date;
+    public DiaryBox(String month, String day) {
+        this.month = month;
+        this.day = day;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public String getDay() {
+        return day;
     }
 }
