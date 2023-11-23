@@ -45,7 +45,6 @@
         app:layout_constraintTop_toBottomOf="@+id/Month"
         tools:ignore="MissingConstraints" />
 
-
     <TextView
         android:id="@+id/Date"
         android:layout_width="wrap_content"
@@ -55,7 +54,6 @@
         android:text="22"
         android:textSize="35sp"
         app:layout_constraintBottom_toTopOf="@+id/DiaryWrite"
-
         app:layout_constraintStart_toStartOf="@+id/DiaryWrite"
         tools:ignore="MissingConstraints" />
 
@@ -66,7 +64,6 @@
         android:layout_marginStart="5dp"
         android:text="WED"
         android:textSize="20sp"
-
         app:layout_constraintBottom_toBottomOf="@+id/Date"
         app:layout_constraintStart_toEndOf="@+id/Date"
         tools:ignore="MissingConstraints" />
@@ -105,6 +102,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DiaryWrite" />
 
+    <ImageView
+        android:id="@+id/GptImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/GPT_Logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DiaryWrite"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/GptText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Today's Comment"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/GptImage"
+        app:layout_constraintStart_toEndOf="@+id/GptImage"
+        app:layout_constraintTop_toTopOf="@+id/GptImage"
+        tools:ignore="MissingConstraints" />
+
     <ImageButton
         android:id="@+id/YoutubeButton"
         android:layout_width="70dp"
@@ -116,5 +137,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/GptButton" />
+
+    <ImageView
+        android:id="@+id/YoutubeImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="148dp"
+        android:src="@drawable/Youtube_Logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DiaryWrite"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/YoutubeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Today's Song"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/YoutubeImage"
+        app:layout_constraintStart_toEndOf="@+id/YoutubeImage"
+        app:layout_constraintTop_toTopOf="@+id/YoutubeImage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
