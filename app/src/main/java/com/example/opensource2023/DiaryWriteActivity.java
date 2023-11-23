@@ -7,19 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class DiaryWriteActivity extends AppCompatActivity implements View.OnClickListener{
 
     ImageButton diaryCheckButton;
     ImageButton diaryClearButton;
-<<<<<<< HEAD
     ImageButton gptResponseButton;
     ImageButton youtubeResponseButton;
-=======
     TextView monthView;
-
->>>>>>> 2a651e8ba887f37db14c74317394c831784bb17e
-
     EditText diaryWrite;
     String month;
 
