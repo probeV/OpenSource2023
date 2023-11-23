@@ -82,6 +82,16 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
         return monthNames[month - 1];
     }
 
+    private void nextActivity() {
+        Intent intent = new Intent(getApplicationContext(), DiaryWriteActivity.class);
+
+        intent.putExtra("year", year);
+        intent.putExtra("month", month);
+        intent.putExtra("day", day);
+
+        startActivity(intent);
+    }
+
     @Override
     public void onClick(View view) {
         if (view == previousMonthBtn) {
@@ -95,6 +105,7 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
             }
             month = Integer.toString(m);
             monthView.setText(getMonthName(m));
+            bindGrid();
         }
 
         if (view == nextMonthBtn) {
@@ -108,16 +119,18 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
             }
             month = Integer.toString(m);
             monthView.setText(getMonthName(m));
+            bindGrid();
         }
 
         if (view == plusBtn) {
-            String d = "12";
-            Log.v("insert", "11");
-            DBHelper helper = new DBHelper(this);
-            SQLiteDatabase db = helper.getWritableDatabase();
-            db.execSQL("insert into diarylist (year, month, day) values (?, ?, ?)", new String[]{year, month, d});
-            db.close();
-            bindGrid();
+//            String d = "12";
+//            Log.v("insert", "11");
+//            DBHelper helper = new DBHelper(this);
+//            SQLiteDatabase db = helper.getWritableDatabase();
+//            db.execSQL("insert into diarylist (year, month, day) values (?, ?, ?)", new String[]{year, month, d});
+//            db.close();
+//            bindGrid();
+            nextActivity();
         }
     }
 }
