@@ -91,7 +91,7 @@
         tools:ignore="MissingConstraints" />
 
     <ImageButton
-        android:id="@+id/GptButton"
+        android:id="@+id/GptResponseButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="64dp"
