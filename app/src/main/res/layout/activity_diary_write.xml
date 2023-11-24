@@ -103,7 +103,7 @@
         app:layout_constraintTop_toBottomOf="@+id/DiaryWrite" />
 
     <ImageView
-        android:id="@+id/GptImage"
+        android:id="@+id/GptTitleImage"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginStart="16dp"
@@ -114,20 +114,20 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/GptText"
+        android:id="@+id/GptTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="Today's Comment"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/GptImage"
-        app:layout_constraintStart_toEndOf="@+id/GptImage"
-        app:layout_constraintTop_toTopOf="@+id/GptImage"
+        app:layout_constraintBottom_toBottomOf="@+id/GptTitleImage"
+        app:layout_constraintStart_toEndOf="@+id/GptTitleImage"
+        app:layout_constraintTop_toTopOf="@+id/GptTitleImage"
         tools:ignore="MissingConstraints" />
 
     <ImageButton
-        android:id="@+id/YoutubeButton"
+        android:id="@+id/YoutubeResponseButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="60dp"
@@ -136,10 +136,10 @@
         android:src="@drawable/youtube_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/GptButton" />
+        app:layout_constraintTop_toBottomOf="@+id/GptResponseButton" />
 
     <ImageView
-        android:id="@+id/YoutubeImage"
+        android:id="@+id/YoutubeTitleImage"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginStart="16dp"
@@ -150,15 +150,15 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/YoutubeText"
+        android:id="@+id/YoutubeTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="Today's Song"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/YoutubeImage"
-        app:layout_constraintStart_toEndOf="@+id/YoutubeImage"
-        app:layout_constraintTop_toTopOf="@+id/YoutubeImage" />
+        app:layout_constraintBottom_toBottomOf="@+id/YoutubeTitleImage"
+        app:layout_constraintStart_toEndOf="@+id/YoutubeTitleImage"
+        app:layout_constraintTop_toTopOf="@+id/YoutubeTitleImage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
