@@ -14,8 +14,8 @@ import android.widget.TextView;
 public class DiaryWriteActivity extends AppCompatActivity implements View.OnClickListener{
 
     //ViewManager 객체 변수
-    private TitleViewManager gptTitleViewManager;
-    private TitleViewManager youtubeTitleViewManager;
+    private ViewManager gptViewManager;
+    private ViewManager youtubeViewManager;
 
     //상단 버튼 변수
     ImageButton diaryCheckButton;
@@ -62,7 +62,6 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         gptResponseButton = (ImageButton) findViewById(R.id.GptResponseButton);
         gptTitleImage = (ImageView) findViewById(R.id.GptTitleImage);
         gptTitleText = (TextView) findViewById(R.id.GptTitleText);
-
         youtubeResponseButton = (ImageButton) findViewById(R.id.YoutubeResponseButton);
         youtubeTitleImage = (ImageView) findViewById(R.id.YoutubeTitleImage);
         youtubeTitleText = (TextView) findViewById(R.id.YoutubeTitleText);
@@ -77,17 +76,17 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         youtubeTitleImage.setVisibility(View.INVISIBLE);
 
         //ViewManager 객체 생성
-        gptTitleViewManager = new TitleViewManager(gptTitleText, gptTitleImage);
-        youtubeTitleViewManager = new TitleViewManager(youtubeTitleText, youtubeTitleImage);
+        gptViewManager = new ViewManager(gptResponseButton, gptTitleText, gptTitleImage);
+        youtubeViewManager = new ViewManager(youtubeResponseButton, youtubeTitleText, youtubeTitleImage);
     }
 
     @Override
     public void onClick(View view) {
         if (view == gptResponseButton) {
-            gptTitleViewManager.toggleVisibility();
+            gptViewManager.toggleVisibility();
         }
         if (view == youtubeResponseButton) {
-            youtubeTitleViewManager.toggleVisibility();
+            youtubeViewManager.toggleVisibility();
         }
     }
 

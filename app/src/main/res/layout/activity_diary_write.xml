@@ -126,6 +126,16 @@
         app:layout_constraintTop_toTopOf="@+id/GptTitleImage"
         tools:ignore="MissingConstraints" />
 
+    <TextView
+        android:id="@+id/GPTResponseTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:text="GPT Response will appear here"
+        app:layout_constraintStart_toStartOf="@+id/GptTitleImage"
+        app:layout_constraintTop_toBottomOf="@+id/GptTitleImage" />
+
     <ImageButton
         android:id="@+id/YoutubeResponseButton"
         android:layout_width="70dp"
