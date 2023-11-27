@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Year"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/Month"
@@ -75,6 +75,7 @@
         android:layout_marginEnd="15dp"
         android:background="#00000000"
         android:src="@drawable/baseline_check_24"
+        android:contentDescription="@string/save_button"
         app:layout_constraintBottom_toBottomOf="@+id/Month"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="MissingConstraints" />
@@ -86,6 +87,7 @@
         android:layout_marginStart="15dp"
         android:background="#00000000"
         android:src="@drawable/baseline_clear_24"
+        android:contentDescription="@string/back_button"
         app:layout_constraintBottom_toBottomOf="@+id/Month"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
@@ -98,11 +100,13 @@
         android:background="#00000000"
         android:scaleType="centerInside"
         android:src="@drawable/gpt_logo"
+        android:contentDescription="@string/gpt_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DiaryWrite" />
 
     <ImageView
+        android:visibility="invisible"
         android:id="@+id/GptTitleImage"
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -114,6 +118,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
+        android:visibility="invisible"
         android:id="@+id/GptTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -127,6 +132,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
+        android:visibility="invisible"
         android:id="@+id/GPTResponseTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -144,11 +150,13 @@
         android:background="#00000000"
         android:scaleType="centerInside"
         android:src="@drawable/youtube_logo"
+        android:contentDescription="@string/youtube_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/GptResponseButton" />
 
     <ImageView
+        android:visibility="invisible"
         android:id="@+id/YoutubeTitleImage"
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -160,6 +168,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
+        android:visibility="invisible"
         android:id="@+id/YoutubeTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -170,5 +179,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/YoutubeTitleImage"
         app:layout_constraintStart_toEndOf="@+id/YoutubeTitleImage"
         app:layout_constraintTop_toTopOf="@+id/YoutubeTitleImage" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+

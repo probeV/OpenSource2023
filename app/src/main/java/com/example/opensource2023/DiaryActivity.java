@@ -31,7 +31,9 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
     private String month;
     private String day;
     private Date calendar;
+    private int id = -1;
     private GridAdapter gridAdapter;
+    DBHelper helper;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,8 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
         nextMonthBtn.setOnClickListener(this);
         plusBtn.setOnClickListener(this);
 
+        helper = new DBHelper(this);
+
         initYearAndMonthText();
         bindGrid();
 
@@ -55,20 +59,18 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
             public void onItemClick(AdapterView<?> a_parent, View a_view, int a_position, long a_id) {
                 final DiaryBox item = (DiaryBox) gridAdapter.getItem(a_position);
                 day = item.getDay();
+                id = item.getId();
                 nextActivity();
             }
         });
     }
 
     private void bindGrid() {
-        int count = 0;
-        DBHelper helper = new DBHelper(this);
         SQLiteDatabase db = helper.getWritableDatabase();
         List<DiaryBox> itemList = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select day from diarylist where month= \'"+ month + "\' and year = \'" + year + "\' order by day", null);
+        Cursor cursor = db.rawQuery("select id, day from diarylist where month= \'"+ month + "\' and year = \'" + year + "\' order by day", null);
         while(cursor.moveToNext()) {
-            itemList.add(new DiaryBox(month, cursor.getString(0)));
-            count++;
+            itemList.add(new DiaryBox(cursor.getInt(0), month, cursor.getString(0)));
         }
         cursor.close();
         db.close();
@@ -101,6 +103,7 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
         intent.putExtra("year", year);
         intent.putExtra("month", month);
         intent.putExtra("day", day);
+        intent.putExtra("id", Integer.toString(id));
 
         Log.v("day", day);
 
