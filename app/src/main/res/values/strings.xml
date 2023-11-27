@@ -5,4 +5,9 @@
     <string name="add_button">add</string>
     <string name="month">MONTH</string>
     <string name="year">YEAR</string>
+    <string name="gpt_button">Go GPT</string>
+    <string name="write_diary">please write your diary</string>
+    <string name="youtube_button">Music</string>
+    <string name="back_button">Back</string>
+    <string name="save_button">Save</string>
 </resources>

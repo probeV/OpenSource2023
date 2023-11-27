@@ -12,7 +12,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String diarySQL = "create table diarylist (" + "id integer primary key autoincrement, " + "year, " + "month, " + "day)";
+        String diarySQL = "create table diarylist (" + "id integer primary key autoincrement, " + "year, " + "month, " + "day, " + "text)";
         sqLiteDatabase.execSQL(diarySQL);
     }
 
