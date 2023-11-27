@@ -2,6 +2,11 @@ package com.example.opensource2023;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class DiaryWriteActivity extends AppCompatActivity implements View.OnClickListener{
+
+    //Youtube 객체 변수
+    private static final String YOUTUBE_API_KEY = "AIzaSyDi0HrZJq5Jj-EYHlry84gjXU0lveG1xbE";
+    private static final String YOUTUBE_VIDEO_ID = "NU6XxRcx5LA";
+    private YouTubePlayerView youTubePlayerView;
+
 
     //ViewManager 객체 변수
     private ViewManager gptViewManager;
@@ -56,6 +67,15 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
 
         ButtonInit();
 
+        youTubePlayerView = findViewById(R.id.YoutubePlayerView);
+        getLifecycle().addObserver(youTubePlayerView);
+
+        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(YouTubePlayer youTubePlayer) {
+                youTubePlayer.loadVideo(YOUTUBE_VIDEO_ID, 0);
+            }
+        });
     }
 
     public void ButtonInit(){
