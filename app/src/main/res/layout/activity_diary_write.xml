@@ -179,5 +179,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/YoutubeTitleImage"
         app:layout_constraintStart_toEndOf="@+id/YoutubeTitleImage"
         app:layout_constraintTop_toTopOf="@+id/YoutubeTitleImage" />
+
+<com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+  android:id="@+id/YoutubePlayerView"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  app:layout_constraintBottom_toBottomOf="parent"
+  app:layout_constraintEnd_toEndOf="parent"
+  app:layout_constraintStart_toStartOf="parent"
+  app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
