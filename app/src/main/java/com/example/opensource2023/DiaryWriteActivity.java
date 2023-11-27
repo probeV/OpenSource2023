@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,13 +28,22 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
     ImageButton gptResponseButton;
     ImageView gptTitleImage;
     TextView gptTitleText;
+    TextView gptResponseText;
     ImageButton youtubeResponseButton;
     ImageView youtubeTitleImage;
     TextView youtubeTitleText;
 
+    TextView yearView;
     TextView monthView;
+    TextView dayView;
+
     EditText diaryWrite;
+    String year;
     String month;
+    String day;
+    String diaryContents;
+    int id;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -39,22 +51,39 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary_write);
 
-//        diaryCheckButton.findViewById(R.id.DiaryCheckButton);
-//        diaryClearButton.findViewById(R.id.DiaryClearButton);
-//        diaryWrite.findViewById(R.id.DiaryWrite);
-
+        yearView = (TextView) findViewById(R.id.Year);
         monthView = (TextView) findViewById(R.id.Month);
+        dayView = (TextView) findViewById(R.id.Date);
+
         Intent intent = getIntent(); /*데이터 수신*/
 
+        year = intent.getExtras().getString("year");
         month = intent.getExtras().getString("month");
+        day = intent.getExtras().getString("day");
+        id = Integer.parseInt(intent.getExtras().getString("id"));
         int m = Integer.parseInt(month);
+        yearView.setText(year);
         monthView.setText(getMonthName(m));
+        dayView.setText(day);
+
+
+        ButtonInit();
 
         diaryCheckButton.setOnClickListener(this);
         diaryClearButton.setOnClickListener(this);
         diaryWrite.setOnClickListener(this);
 
-        ButtonInit();
+        if(id != -1) {
+            DBHelper helper = new DBHelper(this);
+            SQLiteDatabase db = helper.getWritableDatabase();
+            Cursor cursor = db.rawQuery("select text from diarylist where id= \'"+ id + "\'", null);
+            while(cursor.moveToNext()) {
+                diaryContents = cursor.getString(0);
+            }
+            cursor.close();
+            db.close();
+            diaryWrite.setText(diaryContents);
+        }
 
     }
 
@@ -62,32 +91,64 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         gptResponseButton = (ImageButton) findViewById(R.id.GptResponseButton);
         gptTitleImage = (ImageView) findViewById(R.id.GptTitleImage);
         gptTitleText = (TextView) findViewById(R.id.GptTitleText);
+        gptResponseText = (TextView) findViewById(R.id.GPTResponseTextView);
         youtubeResponseButton = (ImageButton) findViewById(R.id.YoutubeResponseButton);
         youtubeTitleImage = (ImageView) findViewById(R.id.YoutubeTitleImage);
         youtubeTitleText = (TextView) findViewById(R.id.YoutubeTitleText);
+        diaryCheckButton = (ImageButton) findViewById(R.id.DiaryCheckButton);
+        diaryClearButton = (ImageButton) findViewById(R.id.DiaryClearButton);
+        diaryWrite = (EditText) findViewById(R.id.DiaryWrite);
 
         gptResponseButton.setOnClickListener(this);
         youtubeResponseButton.setOnClickListener(this);
 
         //숨기기
-        gptTitleText.setVisibility(View.INVISIBLE);
-        gptTitleImage.setVisibility(View.INVISIBLE);
-        youtubeTitleText.setVisibility(View.INVISIBLE);
-        youtubeTitleImage.setVisibility(View.INVISIBLE);
+//        gptTitleText.setVisibility(View.INVISIBLE);
+//        gptTitleImage.setVisibility(View.INVISIBLE);
+//        youtubeTitleText.setVisibility(View.INVISIBLE);
+//        youtubeTitleImage.setVisibility(View.INVISIBLE);
 
         //ViewManager 객체 생성
-        gptViewManager = new ViewManager(gptResponseButton, gptTitleText, gptTitleImage);
-        youtubeViewManager = new ViewManager(youtubeResponseButton, youtubeTitleText, youtubeTitleImage);
+//        gptViewManager = new ViewManager(gptResponseButton, gptTitleText, gptTitleImage);
+//        youtubeViewManager = new ViewManager(youtubeResponseButton, youtubeTitleText, youtubeTitleImage);
     }
 
     @Override
     public void onClick(View view) {
-        if (view == gptResponseButton) {
-            gptViewManager.toggleVisibility();
+        if(view == gptResponseButton) {
+            gptResponseButton.setVisibility(View.INVISIBLE);
+            gptTitleImage.setVisibility(View.VISIBLE);
+            gptTitleText.setVisibility(View.VISIBLE);
+            gptResponseText.setVisibility(View.VISIBLE);
         }
-        if (view == youtubeResponseButton) {
-            youtubeViewManager.toggleVisibility();
+
+        if(view == youtubeResponseButton) {
+            youtubeResponseButton.setVisibility(View.INVISIBLE);
+            youtubeTitleImage.setVisibility(View.VISIBLE);
+            youtubeTitleText.setVisibility(View.VISIBLE);
         }
+
+        if(view == diaryCheckButton) {
+            diaryContents = diaryWrite.getText().toString();
+            Log.v("check", diaryContents);
+            DBHelper helper = new DBHelper(this);
+            SQLiteDatabase db = helper.getWritableDatabase();
+            db.execSQL("insert into diarylist (year, month, day, text) values(?, ?, ?, ?)", new String[]{year, month, day, diaryContents});
+            db.close();
+            Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
+            startActivity(intent);
+        }
+
+        if(view == diaryClearButton) {
+            finish();
+        }
+
+//        if (view == gptResponseButton) {
+//            gptViewManager.toggleVisibility();
+//        }
+//        if (view == youtubeResponseButton) {
+//            youtubeViewManager.toggleVisibility();
+//        }
     }
 
     private String getMonthName(int month) {
