@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -25,10 +26,14 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
     private ImageButton previousMonthBtn;
     private ImageButton nextMonthBtn;
     private ImageButton plusBtn;
+    private GridView gridView;
     private String year;
     private String month;
     private String day;
     private Date calendar;
+    private int id = -1;
+    private GridAdapter gridAdapter;
+    DBHelper helper;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,25 +50,33 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
         nextMonthBtn.setOnClickListener(this);
         plusBtn.setOnClickListener(this);
 
+        helper = new DBHelper(this);
+
         initYearAndMonthText();
         bindGrid();
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> a_parent, View a_view, int a_position, long a_id) {
+                final DiaryBox item = (DiaryBox) gridAdapter.getItem(a_position);
+                day = item.getDay();
+                id = item.getId();
+                nextActivity();
+            }
+        });
     }
 
     private void bindGrid() {
-        DBHelper helper = new DBHelper(this);
         SQLiteDatabase db = helper.getWritableDatabase();
         List<DiaryBox> itemList = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select day from diarylist where month= \'"+ month + "\' order by day", null);
+        Cursor cursor = db.rawQuery("select id, day from diarylist where month= \'"+ month + "\' and year = \'" + year + "\' order by day", null);
         while(cursor.moveToNext()) {
-            itemList.add(new DiaryBox(month, cursor.getString(0)));
-            Log.v("count",cursor.getString(0));
+            itemList.add(new DiaryBox(cursor.getInt(0), month, cursor.getString(0)));
         }
         cursor.close();
         db.close();
 
-        GridView gridView = (GridView) findViewById(R.id.gridView);
-
-        GridAdapter gridAdapter = new GridAdapter(this, itemList);
+        gridView = (GridView) findViewById(R.id.gridView);
+        gridAdapter = new GridAdapter(this, itemList);
         gridView.setAdapter(gridAdapter);
     }
 
@@ -71,8 +84,10 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
         calendar = Calendar.getInstance().getTime();
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
         SimpleDateFormat monthFormat = new SimpleDateFormat("MM", Locale.getDefault());
+        SimpleDateFormat dayFormat = new SimpleDateFormat("dd", Locale.getDefault());
         year = yearFormat.format(calendar);
         month = monthFormat.format(calendar);
+        day = dayFormat.format(calendar);
         yearView.setText(year);
         monthView.setText(getMonthName(Integer.parseInt(month)));
     }
@@ -88,6 +103,9 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
         intent.putExtra("year", year);
         intent.putExtra("month", month);
         intent.putExtra("day", day);
+        intent.putExtra("id", Integer.toString(id));
+
+        Log.v("day", day);
 
         startActivity(intent);
     }
@@ -123,13 +141,6 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
         }
 
         if (view == plusBtn) {
-//            String d = "12";
-//            Log.v("insert", "11");
-//            DBHelper helper = new DBHelper(this);
-//            SQLiteDatabase db = helper.getWritableDatabase();
-//            db.execSQL("insert into diarylist (year, month, day) values (?, ?, ?)", new String[]{year, month, d});
-//            db.close();
-//            bindGrid();
             nextActivity();
         }
     }
