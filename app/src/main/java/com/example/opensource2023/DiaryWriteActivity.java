@@ -14,11 +14,33 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class DiaryWriteActivity extends AppCompatActivity implements View.OnClickListener{
 
     //ViewManager 객체 변수
     private ViewManager gptViewManager;
     private ViewManager youtubeViewManager;
+    private String stringOutput = "";
+
+    // GPT 관련 변수
+    private String stringURLEndPoint = "https://api.openai.com/v1/chat/completions";
+    private String APIKey = "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";
 
     //상단 버튼 변수
     ImageButton diaryCheckButton;
@@ -102,15 +124,6 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         gptResponseButton.setOnClickListener(this);
         youtubeResponseButton.setOnClickListener(this);
 
-        //숨기기
-//        gptTitleText.setVisibility(View.INVISIBLE);
-//        gptTitleImage.setVisibility(View.INVISIBLE);
-//        youtubeTitleText.setVisibility(View.INVISIBLE);
-//        youtubeTitleImage.setVisibility(View.INVISIBLE);
-
-        //ViewManager 객체 생성
-//        gptViewManager = new ViewManager(gptResponseButton, gptTitleText, gptTitleImage);
-//        youtubeViewManager = new ViewManager(youtubeResponseButton, youtubeTitleText, youtubeTitleImage);
     }
 
     @Override
@@ -120,6 +133,69 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
             gptTitleImage.setVisibility(View.VISIBLE);
             gptTitleText.setVisibility(View.VISIBLE);
             gptResponseText.setVisibility(View.VISIBLE);
+            diaryContents = diaryWrite.getText().toString();
+            JSONObject jsonObject = new JSONObject();
+
+            try {
+                jsonObject.put("model", "gpt-3.5-turbo");
+
+                JSONArray jsonArrayMessage = new JSONArray();
+                JSONObject jsonObjectMessage = new JSONObject();
+                jsonObjectMessage.put("role", "user");
+                jsonObjectMessage.put("content", diaryContents + "이 일기에 대해 반응을 해줘.");
+                jsonArrayMessage.put(jsonObjectMessage);
+
+                jsonObject.put("messages", jsonArrayMessage);
+
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                    stringURLEndPoint, jsonObject, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                    String stringText = null;
+                    try {
+                        stringText = response.getJSONArray("choices")
+                                .getJSONObject(0)
+                                .getJSONObject("message")
+                                .getString("content");
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    stringOutput = stringOutput + stringText;
+                    gptResponseText.setText(stringOutput);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> mapHeader = new HashMap<>();
+                    mapHeader.put("Authorization", "Bearer " + APIKey);
+                    mapHeader.put("Content-Type", "application/json");
+
+                    return mapHeader;
+                }
+
+                @Override
+                protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                    return super.parseNetworkResponse(response);
+                }
+            };
+
+            int intTimeoutPeriod = 60000; // 60 seconds timeout duration defined
+            RetryPolicy retryPolicy = new DefaultRetryPolicy(intTimeoutPeriod,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            jsonObjectRequest.setRetryPolicy(retryPolicy);
+            Volley.newRequestQueue(getApplicationContext()).add(jsonObjectRequest);
         }
 
         if(view == youtubeResponseButton) {
@@ -130,6 +206,7 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
 
         if(view == diaryCheckButton) {
             diaryContents = diaryWrite.getText().toString();
+
             Log.v("check", diaryContents);
             DBHelper helper = new DBHelper(this);
             SQLiteDatabase db = helper.getWritableDatabase();
@@ -142,18 +219,10 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         if(view == diaryClearButton) {
             finish();
         }
-
-//        if (view == gptResponseButton) {
-//            gptViewManager.toggleVisibility();
-//        }
-//        if (view == youtubeResponseButton) {
-//            youtubeViewManager.toggleVisibility();
-//        }
     }
 
     private String getMonthName(int month) {
         String[] monthNames = new String[] {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
         return monthNames[month - 1];
     }
-
 }
