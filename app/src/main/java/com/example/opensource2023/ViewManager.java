@@ -24,7 +24,6 @@ public class ViewManager {
             resposeButton.setVisibility(View.INVISIBLE);
             titleText.setVisibility(View.VISIBLE);
             titleImage.setVisibility(View.VISIBLE);
-
         }
     }
 }
