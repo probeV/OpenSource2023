@@ -96,15 +96,22 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         diaryWrite.setOnClickListener(this);
 
         if(id != -1) {
+            gptResponseButton.setVisibility(View.INVISIBLE);
+            gptTitleImage.setVisibility(View.VISIBLE);
+            gptTitleText.setVisibility(View.VISIBLE);
+            gptResponseText.setVisibility(View.VISIBLE);
             DBHelper helper = new DBHelper(this);
             SQLiteDatabase db = helper.getWritableDatabase();
-            Cursor cursor = db.rawQuery("select text from diarylist where id= \'"+ id + "\'", null);
+            Cursor cursor = db.rawQuery("select text, gpt from diarylist where id= \'"+ id + "\'", null);
             while(cursor.moveToNext()) {
                 diaryContents = cursor.getString(0);
+                stringOutput = cursor.getString(1);
             }
             cursor.close();
             db.close();
             diaryWrite.setText(diaryContents);
+            gptResponseText.setText(stringOutput);
+
         }
 
     }
@@ -210,7 +217,7 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
             Log.v("check", diaryContents);
             DBHelper helper = new DBHelper(this);
             SQLiteDatabase db = helper.getWritableDatabase();
-            db.execSQL("insert into diarylist (year, month, day, text) values(?, ?, ?, ?)", new String[]{year, month, day, diaryContents});
+            db.execSQL("insert into diarylist (year, month, day, text, gpt) values(?, ?, ?, ?, ?)", new String[]{year, month, day, diaryContents, stringOutput});
             db.close();
             Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
             startActivity(intent);
