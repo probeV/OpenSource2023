@@ -40,7 +40,7 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
 
     //Youtube 객체 변수
     private static final String YOUTUBE_API_KEY = "AIzaSyDi0HrZJq5Jj-EYHlry84gjXU0lveG1xbE";
-    private static final String YOUTUBE_VIDEO_ID = "NU6XxRcx5LA";
+    private static final String [] YOUTUBE_VIDEO_ID = {"NU6XxRcx5LA", "WayAzmTDzUU", "xU6FRGi4lHw"};
     private YouTubePlayerView youTubePlayerView;
 
 
@@ -118,13 +118,14 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
             diaryWrite.setText(diaryContents);
         }
 
-        youTubePlayerView = findViewById(R.id.YoutubePlayerView);
+
         getLifecycle().addObserver(youTubePlayerView);
+        int randomValue = (int)(Math.random()*100)%YOUTUBE_VIDEO_ID.length;
 
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(YouTubePlayer youTubePlayer) {
-                youTubePlayer.loadVideo(YOUTUBE_VIDEO_ID, 0);
+                youTubePlayer.cueVideo(YOUTUBE_VIDEO_ID[randomValue], 0);
             }
         });
     }
@@ -134,9 +135,12 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         gptTitleImage = (ImageView) findViewById(R.id.GptTitleImage);
         gptTitleText = (TextView) findViewById(R.id.GptTitleText);
         gptResponseText = (TextView) findViewById(R.id.GPTResponseTextView);
+
         youtubeResponseButton = (ImageButton) findViewById(R.id.YoutubeResponseButton);
         youtubeTitleImage = (ImageView) findViewById(R.id.YoutubeTitleImage);
         youtubeTitleText = (TextView) findViewById(R.id.YoutubeTitleText);
+        youTubePlayerView = findViewById(R.id.YoutubePlayerView);
+
         diaryCheckButton = (ImageButton) findViewById(R.id.DiaryCheckButton);
         diaryClearButton = (ImageButton) findViewById(R.id.DiaryClearButton);
         diaryWrite = (EditText) findViewById(R.id.DiaryWrite);
@@ -222,6 +226,7 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
             youtubeResponseButton.setVisibility(View.INVISIBLE);
             youtubeTitleImage.setVisibility(View.VISIBLE);
             youtubeTitleText.setVisibility(View.VISIBLE);
+            youTubePlayerView.setVisibility(View.VISIBLE);
         }
 
         if(view == diaryCheckButton) {
