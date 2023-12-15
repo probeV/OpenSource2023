@@ -104,6 +104,7 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
         intent.putExtra("month", month);
         intent.putExtra("day", day);
         intent.putExtra("id", Integer.toString(id));
+        id = -1;
 
         Log.v("day", day);
 
@@ -141,6 +142,7 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
         }
 
         if (view == plusBtn) {
+            initYearAndMonthText();
             nextActivity();
         }
     }

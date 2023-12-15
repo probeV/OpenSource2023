@@ -14,6 +14,8 @@
             android:layout_width="380dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:justificationMode="inter_word"
+            android:padding="7dp"
             android:background="@drawable/edge"
             android:gravity="top"
             android:inputType="none"
@@ -100,7 +102,7 @@
             android:id="@+id/GptResponseButton"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="50dp"
             android:background="#00000000"
             android:contentDescription="@string/gpt_button"
             android:scaleType="centerInside"
@@ -139,7 +141,7 @@
             android:id="@+id/GPTResponseTextView"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:justificationMode="inter_word"
             android:layout_marginTop="15dp"
             android:textSize="17dp"
             android:gravity="top"
@@ -149,12 +151,22 @@
             app:layout_constraintStart_toStartOf="@+id/GptTitleImage"
             app:layout_constraintTop_toBottomOf="@+id/GptTitleImage" />
 
+        <View
+            android:id="@+id/myline"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#A9A9A9"
+            app:layout_constraintBottom_toTopOf="@+id/YoutubeResponseButton" />
+
         <ImageButton
             android:id="@+id/YoutubeResponseButton"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginTop="70dp"
-            android:background="#00000000"
+            android:background="@drawable/youtube_button_background"
             android:contentDescription="@string/youtube_button"
             android:scaleType="centerInside"
             android:src="@drawable/youtube_logo"
@@ -167,11 +179,12 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/youtube_button_background"
             android:src="@drawable/youtube_logo"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/GPTResponseTextView"
+            app:layout_constraintTop_toBottomOf="@+id/myline"
             tools:ignore="MissingConstraints" />
 
         <TextView
@@ -186,6 +199,14 @@
             app:layout_constraintBottom_toBottomOf="@+id/YoutubeTitleImage"
             app:layout_constraintStart_toEndOf="@+id/YoutubeTitleImage"
             app:layout_constraintTop_toTopOf="@+id/YoutubeTitleImage" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#A9A9A9"
+            app:layout_constraintTop_toBottomOf="@+id/YoutubeResponseButton"/>
 
         <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
             android:id="@+id/YoutubePlayerView"
@@ -195,7 +216,6 @@
             android:layout_marginBottom="15dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/YoutubeTitleImage" />

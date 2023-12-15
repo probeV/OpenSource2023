@@ -75,7 +75,9 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
     String month;
     String day;
     String diaryContents;
+    String gptContents;
     int id;
+    int randomValue = -1;
 
 
     @SuppressLint("MissingInflatedId")
@@ -109,18 +111,32 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         if(id != -1) {
             DBHelper helper = new DBHelper(this);
             SQLiteDatabase db = helper.getWritableDatabase();
-            Cursor cursor = db.rawQuery("select text from diarylist where id= \'"+ id + "\'", null);
-            while(cursor.moveToNext()) {
-                diaryContents = cursor.getString(0);
+            Cursor cursor = db.rawQuery("select text, gpt, song from diarylist where id= \'"+ id + "\'", null);
+            cursor.moveToNext();
+            diaryContents = cursor.getString(0);
+            gptContents = cursor.getString(1);
+            randomValue = Integer.parseInt(cursor.getString(2));
+            if(gptContents != null) {
+                gptResponseButton.setVisibility(View.INVISIBLE);
+                gptTitleImage.setVisibility(View.VISIBLE);
+                gptTitleText.setVisibility(View.VISIBLE);
+                gptResponseText.setVisibility(View.VISIBLE);
+            }
+            if(randomValue != -1) {
+                youtubeResponseButton.setVisibility(View.INVISIBLE);
+                youtubeTitleImage.setVisibility(View.VISIBLE);
+                youtubeTitleText.setVisibility(View.VISIBLE);
+                youTubePlayerView.setVisibility(View.VISIBLE);
             }
             cursor.close();
             db.close();
             diaryWrite.setText(diaryContents);
+            gptResponseText.setText(gptContents);
+        } else {
+            randomValue = (int)(Math.random()*100)%YOUTUBE_VIDEO_ID.length;
         }
 
-
         getLifecycle().addObserver(youTubePlayerView);
-        int randomValue = (int)(Math.random()*100)%YOUTUBE_VIDEO_ID.length;
 
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
@@ -153,11 +169,14 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View view) {
         if(view == gptResponseButton) {
+            diaryContents = diaryWrite.getText().toString();
+            if(diaryContents.equals("")) {
+                return;
+            }
             gptResponseButton.setVisibility(View.INVISIBLE);
             gptTitleImage.setVisibility(View.VISIBLE);
             gptTitleText.setVisibility(View.VISIBLE);
             gptResponseText.setVisibility(View.VISIBLE);
-            diaryContents = diaryWrite.getText().toString();
             JSONObject jsonObject = new JSONObject();
 
             try {
@@ -223,6 +242,9 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         }
 
         if(view == youtubeResponseButton) {
+            if(diaryContents.equals("")) {
+                return;
+            }
             youtubeResponseButton.setVisibility(View.INVISIBLE);
             youtubeTitleImage.setVisibility(View.VISIBLE);
             youtubeTitleText.setVisibility(View.VISIBLE);
@@ -230,15 +252,27 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         }
 
         if(view == diaryCheckButton) {
-            diaryContents = diaryWrite.getText().toString();
-
-            Log.v("check", diaryContents);
-            DBHelper helper = new DBHelper(this);
-            SQLiteDatabase db = helper.getWritableDatabase();
-            db.execSQL("insert into diarylist (year, month, day, text) values(?, ?, ?, ?)", new String[]{year, month, day, diaryContents});
-            db.close();
-            Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
-            startActivity(intent);
+            if(id == -1) {
+                diaryContents = diaryWrite.getText().toString();
+                gptContents = gptResponseText.getText().toString();
+                //Log.v("check", diaryContents);
+                DBHelper helper = new DBHelper(this);
+                SQLiteDatabase db = helper.getWritableDatabase();
+                db.execSQL("insert into diarylist (year, month, day, text, gpt, song) values(?, ?, ?, ?, ?, ?)", new String[]{year, month, day, diaryContents, gptContents, Integer.toString(randomValue)});
+                db.close();
+                Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
+                startActivity(intent);
+            } else {
+                diaryContents = diaryWrite.getText().toString();
+                gptContents = gptResponseText.getText().toString();
+                //Log.v("pre", "pre");
+                DBHelper helper = new DBHelper(this);
+                SQLiteDatabase db = helper.getWritableDatabase();
+                db.execSQL("update diarylist set year = \'" + year + "\', month = \'" + month + "\', day = \'" + day + "\', text = \'" + diaryContents + "\', gpt = \'" + gptContents + "\', song = \'" + Integer.toString(randomValue) + "\' WHERE id = " + id);
+                db.close();
+                Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
+                startActivity(intent);
+            }
         }
 
         if(view == diaryClearButton) {
