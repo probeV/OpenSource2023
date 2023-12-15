@@ -78,6 +78,7 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
     String gptContents;
     int id;
     int randomValue = -1;
+    boolean checkYoutube = false;
 
 
     @SuppressLint("MissingInflatedId")
@@ -116,7 +117,8 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
             diaryContents = cursor.getString(0);
             gptContents = cursor.getString(1);
             randomValue = Integer.parseInt(cursor.getString(2));
-            if(gptContents != null) {
+            Log.v("rv", cursor.getString(2));
+            if(!gptContents.equals("")) {
                 gptResponseButton.setVisibility(View.INVISIBLE);
                 gptTitleImage.setVisibility(View.VISIBLE);
                 gptTitleText.setVisibility(View.VISIBLE);
@@ -132,11 +134,12 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
             db.close();
             diaryWrite.setText(diaryContents);
             gptResponseText.setText(gptContents);
-        } else {
-            randomValue = (int)(Math.random()*100)%YOUTUBE_VIDEO_ID.length;
         }
 
         getLifecycle().addObserver(youTubePlayerView);
+        if(randomValue == -1) {
+            randomValue = (int) (Math.random() * 100) % YOUTUBE_VIDEO_ID.length;
+        }
 
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
@@ -185,7 +188,7 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
                 JSONArray jsonArrayMessage = new JSONArray();
                 JSONObject jsonObjectMessage = new JSONObject();
                 jsonObjectMessage.put("role", "user");
-                jsonObjectMessage.put("content", diaryContents + "이 일기에 대해 반응을 해줘.");
+                jsonObjectMessage.put("content", diaryContents + "내 일기에 대해 반응을 해줘!");
                 jsonArrayMessage.put(jsonObjectMessage);
 
                 jsonObject.put("messages", jsonArrayMessage);
@@ -245,6 +248,7 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
             if(diaryContents.equals("")) {
                 return;
             }
+            checkYoutube = true;
             youtubeResponseButton.setVisibility(View.INVISIBLE);
             youtubeTitleImage.setVisibility(View.VISIBLE);
             youtubeTitleText.setVisibility(View.VISIBLE);
@@ -252,6 +256,9 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         }
 
         if(view == diaryCheckButton) {
+            if(!checkYoutube) {
+                randomValue = -1;
+            }
             if(id == -1) {
                 diaryContents = diaryWrite.getText().toString();
                 gptContents = gptResponseText.getText().toString();
@@ -273,6 +280,7 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
                 Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
                 startActivity(intent);
             }
+
         }
 
         if(view == diaryClearButton) {
