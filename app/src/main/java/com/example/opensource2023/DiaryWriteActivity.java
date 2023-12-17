@@ -40,7 +40,7 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
 
     //Youtube 객체 변수
     private static final String YOUTUBE_API_KEY = "AIzaSyDi0HrZJq5Jj-EYHlry84gjXU0lveG1xbE";
-    private static final String [] YOUTUBE_VIDEO_ID = {"NU6XxRcx5LA", "WayAzmTDzUU", "xU6FRGi4lHw"};
+    private static final String [] YOUTUBE_VIDEO_ID = {"NU6XxRcx5LA", "WayAzmTDzUU", "xU6FRGi4lHw", "xlyrt5eAtKI", "pF5ElVjLFuo", "b_6EfFZyBxY"};
     private YouTubePlayerView youTubePlayerView;
 
 
@@ -120,7 +120,8 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
 
 
         getLifecycle().addObserver(youTubePlayerView);
-        int randomValue = (int)(Math.random()*100)%YOUTUBE_VIDEO_ID.length;
+        double random=Math.random();
+        int randomValue = (int)(Math.round(random*(YOUTUBE_VIDEO_ID.length-1)));
 
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
