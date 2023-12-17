@@ -68,13 +68,12 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
     private void bindGrid() {
         SQLiteDatabase db = helper.getWritableDatabase();
         List<DiaryBox> itemList = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select id, day from diarylist where month= \'"+ month + "\' and year = \'" + year + "\' order by day", null);
+        Cursor cursor = db.rawQuery("select id, day from diarylist where month= \'"+ month + "\' and year = \'" + year + "\' order by id", null);
         while(cursor.moveToNext()) {
-            itemList.add(new DiaryBox(cursor.getInt(0), month, cursor.getString(0)));
+            itemList.add(new DiaryBox(cursor.getInt(0), month, cursor.getString(1)));
         }
         cursor.close();
         db.close();
-
         gridView = (GridView) findViewById(R.id.gridView);
         gridAdapter = new GridAdapter(this, itemList);
         gridView.setAdapter(gridAdapter);
@@ -99,11 +98,11 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
 
     private void nextActivity() {
         Intent intent = new Intent(getApplicationContext(), DiaryWriteActivity.class);
-
         intent.putExtra("year", year);
         intent.putExtra("month", month);
         intent.putExtra("day", day);
         intent.putExtra("id", Integer.toString(id));
+        id = -1;
 
         Log.v("day", day);
 
@@ -141,6 +140,7 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
         }
 
         if (view == plusBtn) {
+            initYearAndMonthText();
             nextActivity();
         }
     }

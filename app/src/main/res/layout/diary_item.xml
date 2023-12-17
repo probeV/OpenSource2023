@@ -7,9 +7,9 @@
 
     <TextView
         android:id="@+id/date"
-        android:layout_width="wrap_content"
+        android:layout_width="41dp"
         android:layout_height="wrap_content"
-        android:text="11/20"
+        android:gravity="center"
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_marginBottom="24dp"
