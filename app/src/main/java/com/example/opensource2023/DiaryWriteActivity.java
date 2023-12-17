@@ -248,6 +248,7 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         }
 
         if(view == youtubeResponseButton) {
+            diaryContents = diaryWrite.getText().toString();
             if(diaryContents.equals("")) {
                 return;
             }
