@@ -1,224 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <!--    일기 스크롤 뷰    -->
+    <ScrollView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/DiaryWrite"
-            android:layout_width="380dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:justificationMode="inter_word"
-            android:padding="7dp"
-            android:background="@drawable/edge"
-            android:gravity="top"
-            android:inputType="none"
-            android:minLines="15"
-            android:privateImeOptions="defaultInputmode=korean"
-            android:scrollbars="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Year"
-            tools:ignore="SpeakableTextPresentCheck" />
-
-        <TextView
-            android:id="@+id/Month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="@string/month"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/Year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/year"
-            android:textSize="25sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Month"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/Date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginBottom="5dp"
-            android:text="22"
-            android:textSize="35sp"
-            app:layout_constraintBottom_toTopOf="@+id/DiaryWrite"
-            app:layout_constraintStart_toStartOf="@+id/DiaryWrite"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/Day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="WED"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/Date"
-            app:layout_constraintStart_toEndOf="@+id/Date"
-            tools:ignore="MissingConstraints" />
-
-        <ImageButton
-            android:id="@+id/DiaryCheckButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:background="#00000000"
-            android:contentDescription="@string/save_button"
-            android:src="@drawable/baseline_check_24"
-            app:layout_constraintBottom_toBottomOf="@+id/Month"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:ignore="MissingConstraints" />
-
-        <ImageButton
-            android:id="@+id/DiaryClearButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:background="#00000000"
-            android:contentDescription="@string/back_button"
-            android:src="@drawable/baseline_clear_24"
-            app:layout_constraintBottom_toBottomOf="@+id/Month"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints" />
-
-        <ImageButton
-            android:id="@+id/GptResponseButton"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="50dp"
-            android:background="#00000000"
-            android:contentDescription="@string/gpt_button"
-            android:scaleType="centerInside"
-            android:src="@drawable/gpt_logo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/DiaryWrite" />
-
-        <ImageView
-            android:id="@+id/GptTitleImage"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/gpt_logo"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/DiaryWrite"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/GptTitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="Today's Comment"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/GptTitleImage"
-            app:layout_constraintStart_toEndOf="@+id/GptTitleImage"
-            app:layout_constraintTop_toTopOf="@+id/GptTitleImage"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/GPTResponseTextView"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:justificationMode="inter_word"
-            android:layout_marginTop="15dp"
-            android:textSize="17dp"
-            android:gravity="top"
-            android:minLines="1"
-            android:text="GPT Response will appear here"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="@+id/GptTitleImage"
-            app:layout_constraintTop_toBottomOf="@+id/GptTitleImage" />
-
-        <View
-            android:id="@+id/myline"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="35dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#A9A9A9"
-            app:layout_constraintBottom_toTopOf="@+id/YoutubeResponseButton" />
+            android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/YoutubeResponseButton"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="70dp"
-            android:background="@drawable/youtube_button_background"
-            android:contentDescription="@string/youtube_button"
-            android:scaleType="centerInside"
-            android:src="@drawable/youtube_logo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/GPTResponseTextView" />
+            <!--    스티커 뷰 / 일기 작성 칸 -->
+            <com.example.opensource2023.sticker.StickerView
+                android:id="@+id/StickerView"
+                android:layout_width="380dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edge"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/DiaryTitle">
 
-        <ImageView
-            android:id="@+id/YoutubeTitleImage"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="35dp"
-            android:background="@drawable/youtube_button_background"
-            android:src="@drawable/youtube_logo"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/myline"
-            tools:ignore="MissingConstraints" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/YoutubeTitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="Today's Song"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/YoutubeTitleImage"
-            app:layout_constraintStart_toEndOf="@+id/YoutubeTitleImage"
-            app:layout_constraintTop_toTopOf="@+id/YoutubeTitleImage" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#A9A9A9"
-            app:layout_constraintTop_toBottomOf="@+id/YoutubeResponseButton"/>
+                    <EditText
+                        android:id="@+id/DiaryWrite"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:minLines="15"
+                        android:privateImeOptions="defaultInputmode=korean"
+                        android:gravity="top"
+                        android:inputType="none"
+                        android:justificationMode="inter_word"
+                        android:scrollbars="vertical"
+                        android:background="@android:color/transparent"
+                        />
+                </LinearLayout>
+            </com.example.opensource2023.sticker.StickerView>
 
-        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-            android:id="@+id/YoutubePlayerView"
-            android:layout_width="380dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/YoutubeTitleImage" />
+            <EditText
+                android:id="@+id/DiaryTitle"
+                android:layout_width="270dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/StickerView"
+                app:layout_constraintStart_toEndOf="@+id/Day"
+                app:layout_constraintTop_toBottomOf="@+id/Year"
+                android:hint="Title"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/Month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/month"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/Year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/year"
+                android:textSize="25sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Month"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/Date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="22"
+                android:textSize="35sp"
+                app:layout_constraintBottom_toTopOf="@+id/StickerView"
+                app:layout_constraintStart_toStartOf="@+id/StickerView"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/Day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="WED"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/Date"
+                app:layout_constraintStart_toEndOf="@+id/Date"
+                tools:ignore="MissingConstraints" />
+
+            <ImageButton
+                android:id="@+id/DiaryCheckButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:background="#00000000"
+                android:contentDescription="@string/save_button"
+                android:src="@drawable/baseline_check_24"
+                app:layout_constraintBottom_toBottomOf="@+id/Month"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <ImageButton
+                android:id="@+id/DiaryClearButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:background="#00000000"
+                android:contentDescription="@string/back_button"
+                android:src="@drawable/baseline_clear_24"
+                app:layout_constraintBottom_toBottomOf="@+id/Month"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <ImageButton
+                android:id="@+id/GptResponseButton"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="50dp"
+                android:background="#00000000"
+                android:contentDescription="@string/gpt_button"
+                android:scaleType="centerInside"
+                android:src="@drawable/gpt_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/StickerView" />
+
+            <ImageView
+                android:id="@+id/GptTitleImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/gpt_logo"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/StickerView"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/GptTitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Today's Comment"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/GptTitleImage"
+                app:layout_constraintStart_toEndOf="@+id/GptTitleImage"
+                app:layout_constraintTop_toTopOf="@+id/GptTitleImage"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/GPTResponseTextView"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:layout_marginTop="15dp"
+                android:textSize="17dp"
+                android:gravity="top"
+                android:minLines="1"
+                android:text="GPT Response will appear here"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@+id/GptTitleImage"
+                app:layout_constraintTop_toBottomOf="@+id/GptTitleImage" />
+
+            <View
+                android:id="@+id/myline"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="35dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#A9A9A9"
+                app:layout_constraintBottom_toTopOf="@+id/YoutubeResponseButton" />
+
+            <ImageButton
+                android:id="@+id/YoutubeResponseButton"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="70dp"
+                android:background="@drawable/youtube_button_background"
+                android:contentDescription="@string/youtube_button"
+                android:scaleType="centerInside"
+                android:src="@drawable/youtube_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/GPTResponseTextView" />
+
+            <ImageView
+                android:id="@+id/YoutubeTitleImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="35dp"
+                android:background="@drawable/youtube_button_background"
+                android:src="@drawable/youtube_logo"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/myline"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/YoutubeTitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Today's Song"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/YoutubeTitleImage"
+                app:layout_constraintStart_toEndOf="@+id/YoutubeTitleImage"
+                app:layout_constraintTop_toTopOf="@+id/YoutubeTitleImage" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="40dp"
+                android:background="#A9A9A9"
+                app:layout_constraintTop_toBottomOf="@+id/YoutubeResponseButton"
+                tools:layout_editor_absoluteX="10dp" />
+
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/YoutubePlayerView"
+                android:layout_width="380dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/YoutubeTitleImage" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <!--    이모지 선택 뷰    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </LinearLayout>
+
+</LinearLayout>

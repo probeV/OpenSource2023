@@ -1,8 +1,10 @@
 package com.example.opensource2023;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.example.opensource2023.sticker.BitmapStickerIcon;
+import com.example.opensource2023.sticker.StickerView;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -11,6 +13,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -80,12 +83,21 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
     int randomValue = -1;
     boolean checkYoutube = false;
 
+    //스티커 뷰
+    StickerView stickerView;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary_write);
+
+        //스티커 뷰
+//        stickerView = (StickerView)findViewById(R.id.StickerView);
+//
+//        BitmapStickerIcon deleteIcon= new BitmapStickerIcon(ContextCompat.getDrawable(this,R.drawable.sticker_ic_close_white_18dp),BitmapStickerIcon.LEFT_TOP);
+//        BitmapStickerIcon flipIcon  = new BitmapStickerIcon(ContextCompat.getDrawable(this,R.drawable.sticker_ic_flip_white_18dp),BitmapStickerIcon.RIGHT_BOTOM);
+//        BitmapStickerIcon scaleIcon = new BitmapStickerIcon(ContextCompat.getDrawable(this,R.drawable.sticker_ic_scale_white_18dp),BitmapStickerIcon.LEFT_BOTTOM);
 
         yearView = (TextView) findViewById(R.id.Year);
         monthView = (TextView) findViewById(R.id.Month);
@@ -102,8 +114,7 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         monthView.setText(getMonthName(m));
         dayView.setText(day);
 
-
-        ButtonInit();
+        InitVar();
 
         diaryCheckButton.setOnClickListener(this);
         diaryClearButton.setOnClickListener(this);
@@ -152,7 +163,8 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
-    public void ButtonInit(){
+
+    public void InitVar(){
         gptResponseButton = (ImageButton) findViewById(R.id.GptResponseButton);
         gptTitleImage = (ImageView) findViewById(R.id.GptTitleImage);
         gptTitleText = (TextView) findViewById(R.id.GptTitleText);
@@ -169,7 +181,6 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
 
         gptResponseButton.setOnClickListener(this);
         youtubeResponseButton.setOnClickListener(this);
-
     }
 
     @Override
@@ -296,4 +307,5 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         String[] monthNames = new String[] {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
         return monthNames[month - 1];
     }
+
 }
