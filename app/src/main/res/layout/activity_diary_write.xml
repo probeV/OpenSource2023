@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <!--    일기 스크롤 뷰    -->
     <ScrollView
+        android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -34,14 +36,13 @@
                         android:id="@+id/DiaryWrite"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:minLines="15"
-                        android:privateImeOptions="defaultInputmode=korean"
+                        android:background="@android:color/transparent"
                         android:gravity="top"
                         android:inputType="none"
                         android:justificationMode="inter_word"
-                        android:scrollbars="vertical"
-                        android:background="@android:color/transparent"
-                        />
+                        android:minLines="15"
+                        android:privateImeOptions="defaultInputmode=korean"
+                        android:scrollbars="vertical" />
                 </LinearLayout>
             </com.example.opensource2023.sticker.StickerView>
 
@@ -51,10 +52,10 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
+                android:hint="Title"
                 app:layout_constraintBottom_toTopOf="@+id/StickerView"
                 app:layout_constraintStart_toEndOf="@+id/Day"
-                app:layout_constraintTop_toBottomOf="@+id/Year"
-                android:hint="Title"/>
+                app:layout_constraintTop_toBottomOf="@+id/Year" />
 
             <TextView
                 android:id="@+id/Month"
@@ -170,12 +171,12 @@
                 android:id="@+id/GPTResponseTextView"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:justificationMode="inter_word"
                 android:layout_marginTop="15dp"
-                android:textSize="17dp"
                 android:gravity="top"
+                android:justificationMode="inter_word"
                 android:minLines="1"
                 android:text="GPT Response will appear here"
+                android:textSize="17dp"
                 android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="@+id/GptTitleImage"
                 app:layout_constraintTop_toBottomOf="@+id/GptTitleImage" />
@@ -184,9 +185,9 @@
                 android:id="@+id/myline"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginBottom="35dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginBottom="35dp"
                 android:background="#A9A9A9"
                 app:layout_constraintBottom_toTopOf="@+id/YoutubeResponseButton" />
 
@@ -256,9 +257,39 @@
     <!--    이모지 선택 뷰    -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        >
+
+        <ImageButton
+            android:id="@+id/StickerViewButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/baseline_arrow_drop_up_24_background"
+            android:src="@drawable/baseline_arrow_drop_up_24"/>
 
 
+        <HorizontalScrollView
+            android:id="@+id/StickerSelectView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/baseline_arrow_drop_up_24_background"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <GridView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/HorizontalGridView"
+                    android:layout_gravity="center"
+                    />
+            </LinearLayout>
+        </HorizontalScrollView>
     </LinearLayout>
 
 </LinearLayout>

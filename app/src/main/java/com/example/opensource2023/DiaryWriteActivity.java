@@ -14,10 +14,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,6 +39,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,6 +89,11 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
 
     //스티커 뷰
     StickerView stickerView;
+    ImageButton stickerViewButton;
+    GridView horizontalGridView;
+
+    String [] stickerViewImage;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -98,6 +107,14 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
 //        BitmapStickerIcon deleteIcon= new BitmapStickerIcon(ContextCompat.getDrawable(this,R.drawable.sticker_ic_close_white_18dp),BitmapStickerIcon.LEFT_TOP);
 //        BitmapStickerIcon flipIcon  = new BitmapStickerIcon(ContextCompat.getDrawable(this,R.drawable.sticker_ic_flip_white_18dp),BitmapStickerIcon.RIGHT_BOTOM);
 //        BitmapStickerIcon scaleIcon = new BitmapStickerIcon(ContextCompat.getDrawable(this,R.drawable.sticker_ic_scale_white_18dp),BitmapStickerIcon.LEFT_BOTTOM);
+
+        stickerViewButton = (ImageButton)findViewById(R.id.StickerViewButton);
+
+        //스티커 선택 이미지 그리드 뷰
+        horizontalGridView = (GridView)findViewById(R.id.HorizontalGridView);
+
+
+
 
         yearView = (TextView) findViewById(R.id.Year);
         monthView = (TextView) findViewById(R.id.Month);
