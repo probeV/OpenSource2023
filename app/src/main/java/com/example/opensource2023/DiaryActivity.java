@@ -1,6 +1,7 @@
 package com.example.opensource2023;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -29,8 +30,9 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
     private GridView gridView;
     private String year;
     private String month;
-    private String day;
+    private String date;
     private Date calendar;
+
     private int id = -1;
     private GridAdapter gridAdapter;
     DBHelper helper;
@@ -58,7 +60,7 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a_parent, View a_view, int a_position, long a_id) {
                 final DiaryBox item = (DiaryBox) gridAdapter.getItem(a_position);
-                day = item.getDay();
+                date = item.getDay();
                 id = item.getId();
                 nextActivity();
             }
@@ -68,9 +70,9 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
     private void bindGrid() {
         SQLiteDatabase db = helper.getWritableDatabase();
         List<DiaryBox> itemList = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select id, day from diarylist where month= \'"+ month + "\' and year = \'" + year + "\' order by day", null);
+        Cursor cursor = db.rawQuery("select id, day from diarylist where year = \'" + year + "\' and month= \'"+ month + "\' order by day", null);
         while(cursor.moveToNext()) {
-            itemList.add(new DiaryBox(cursor.getInt(0), month, cursor.getString(0)));
+            itemList.add(new DiaryBox(cursor.getInt(0), month, cursor.getString(1)));
         }
         cursor.close();
         db.close();
@@ -87,7 +89,9 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
         SimpleDateFormat dayFormat = new SimpleDateFormat("dd", Locale.getDefault());
         year = yearFormat.format(calendar);
         month = monthFormat.format(calendar);
-        day = dayFormat.format(calendar);
+        int m = Integer.parseInt(month);
+        month = Integer.toString(m);
+        date = dayFormat.format(calendar);
         yearView.setText(year);
         monthView.setText(getMonthName(Integer.parseInt(month)));
     }
@@ -102,10 +106,10 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
 
         intent.putExtra("year", year);
         intent.putExtra("month", month);
-        intent.putExtra("day", day);
+        intent.putExtra("day", date);
         intent.putExtra("id", Integer.toString(id));
 
-        Log.v("day", day);
+        Log.v("day", date);
 
         startActivity(intent);
     }
@@ -141,7 +145,9 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
         }
 
         if (view == plusBtn) {
-            nextActivity();
+            DialogFragment dialogFragment = new DatePickerFragment();
+            dialogFragment.show(getSupportFragmentManager(), "datePicker");
+            Log.v("정보", year + " " + month + " " + date);
         }
     }
 }
