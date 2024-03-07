@@ -76,7 +76,6 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
         }
         cursor.close();
         db.close();
-
         gridView = (GridView) findViewById(R.id.gridView);
         gridAdapter = new GridAdapter(this, itemList);
         gridView.setAdapter(gridAdapter);
@@ -103,11 +102,11 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
 
     private void nextActivity() {
         Intent intent = new Intent(getApplicationContext(), DiaryWriteActivity.class);
-
         intent.putExtra("year", year);
         intent.putExtra("month", month);
         intent.putExtra("day", date);
         intent.putExtra("id", Integer.toString(id));
+        id = -1;
 
         Log.v("day", date);
 
@@ -148,6 +147,8 @@ public class DiaryActivity extends AppCompatActivity implements View.OnClickList
             DialogFragment dialogFragment = new DatePickerFragment();
             dialogFragment.show(getSupportFragmentManager(), "datePicker");
             Log.v("정보", year + " " + month + " " + date);
+            initYearAndMonthText();
+            nextActivity();
         }
     }
 }
