@@ -39,6 +39,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,11 +78,13 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
 
     TextView yearView;
     TextView monthView;
+    TextView dateView;
     TextView dayView;
 
     EditText diaryWrite;
     String year;
     String month;
+    String date;
     String day;
     String diaryContents;
     String gptContents;
@@ -118,19 +123,37 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
 
         yearView = (TextView) findViewById(R.id.Year);
         monthView = (TextView) findViewById(R.id.Month);
-        dayView = (TextView) findViewById(R.id.Date);
+        dateView = (TextView) findViewById(R.id.Date);
+        dayView = (TextView) findViewById(R.id.Day);
 
         Intent intent = getIntent(); /*데이터 수신*/
 
         year = intent.getExtras().getString("year");
         month = intent.getExtras().getString("month");
-        day = intent.getExtras().getString("day");
+        date = intent.getExtras().getString("day");
         id = Integer.parseInt(intent.getExtras().getString("id"));
         int m = Integer.parseInt(month);
         yearView.setText(year);
         monthView.setText(getMonthName(m));
-        dayView.setText(day);
 
+        dateView.setText(date);
+
+        // 요일 구하여 출력
+        day = year + "-" + month + "-" + date;
+        try {
+            // 문자열을 Date 객체로 변환
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = sdf.parse(day);
+
+            // 요일을 출력하기 위해 다시 문자열로 변환
+            SimpleDateFormat dayFormat = new SimpleDateFormat("EEE");
+            String dayOfWeek = dayFormat.format(date);
+            dayView.setText(dayOfWeek);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        ButtonInit();
         InitVar();
 
         diaryCheckButton.setOnClickListener(this);
@@ -138,8 +161,13 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
         diaryWrite.setOnClickListener(this);
 
         if(id != -1) {
+            gptResponseButton.setVisibility(View.INVISIBLE);
+            gptTitleImage.setVisibility(View.VISIBLE);
+            gptTitleText.setVisibility(View.VISIBLE);
+            gptResponseText.setVisibility(View.VISIBLE);
             DBHelper helper = new DBHelper(this);
             SQLiteDatabase db = helper.getWritableDatabase();
+
             Cursor cursor = db.rawQuery("select text, gpt, song from diarylist where id= \'"+ id + "\'", null);
             cursor.moveToNext();
             diaryContents = cursor.getString(0);
@@ -161,7 +189,8 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
             cursor.close();
             db.close();
             diaryWrite.setText(diaryContents);
-            gptResponseText.setText(gptContents);
+
+            gptResponseText.setText(stringOutput);
         }
 
         getLifecycle().addObserver(youTubePlayerView);
@@ -313,6 +342,14 @@ public class DiaryWriteActivity extends AppCompatActivity implements View.OnClic
                 startActivity(intent);
             }
 
+            Log.v("check", diaryContents);
+            Log.v("check 2", year + " " + month + " " + date);
+            DBHelper helper = new DBHelper(this);
+            SQLiteDatabase db = helper.getWritableDatabase();
+            db.execSQL("insert into diarylist (year, month, day, text, gpt) values(?, ?, ?, ?, ?)", new String[]{year, month, date, diaryContents, stringOutput});
+            db.close();
+            Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
+            startActivity(intent);
         }
 
         if(view == diaryClearButton) {

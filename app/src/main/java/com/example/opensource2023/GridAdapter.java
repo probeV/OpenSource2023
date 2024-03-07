@@ -32,9 +32,17 @@ public class GridAdapter extends ArrayAdapter<DiaryBox> {
 
         final DiaryBox countryItem = mItemList.get(a_position);
 
+        String month = countryItem.getMonth();
+        if(month.length() == 1) {
+            month = " " + countryItem.getMonth() + " ";
+        }
 
-        String date = countryItem.getMonth() + "/" + countryItem.getDay();
-        Log.v("test", date);
+        String day = countryItem.getDay();
+        if(day.length() == 1) {
+            day = "0" + countryItem.getDay();
+        }
+
+        String date = month + "/" + day;
 
         holder.date.setText(date);
 
